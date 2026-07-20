@@ -4,10 +4,9 @@ export const SITE = {
   name: 'Progress Visible Studio',
   shortName: 'Progress Visible',
   domain: 'progressvisible.com',
-  /** The studio thesis — the one line everything else hangs from. */
   thesis: 'Make progress visible.',
-  tagline: 'A small software studio building calm, buy-once tools that show the work.',
-  email: 'hello@progressvisible.com',
+  tagline: 'A small software & design studio building elegant, budget-conscious tools.',
+  email: 'kurt@progressvisible.com',
 };
 
 // The studio's products. Order is deliberate: current work first.

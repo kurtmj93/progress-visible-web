@@ -114,7 +114,7 @@ body {
 
 /* Display headings echo the wordmark: heavy Archivo, tight tracking. */
 .display {
-  font-weight: 800;
+  font-weight: 600;
   letter-spacing: -0.02em;
   line-height: 1.02;
 }
@@ -123,3 +123,17 @@ body {
   background: var(--color-accent);
   color: var(--color-accent-ink);
 }
+
+/* Light/dark screenshot swap — mirrors the theme resolution used by ThemeToggle and
+   the marks: system preference by default, an explicit [data-theme] always wins.
+   Both variants ship; CSS shows the right one (keeps the page at zero JS). */
+.shot-dark { display: none; }
+.shot-light { display: block; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .shot-dark { display: block; }
+  :root:not([data-theme="light"]) .shot-light { display: none; }
+}
+:root[data-theme="dark"] .shot-dark { display: block; }
+:root[data-theme="dark"] .shot-light { display: none; }
+:root[data-theme="light"] .shot-dark { display: none; }
+:root[data-theme="light"] .shot-light { display: block; }
