@@ -1,14 +1,17 @@
 @import "tailwindcss";
 
 /* Fonts are self-hosted (@fontsource) — imported in Base.astro — so the page makes NO
-   external font requests. EB Garamond + Inter match the studio's product faces
-   (Discbound) for brand continuity across the whole studio. */
+   external font requests. Archivo (the studio brand face) is used throughout; the
+   wordmark itself is outlined SVG and needs no font. */
 
 /* Design tokens. Colours are CSS variables so light/dark can swap at runtime; the
-   @theme block maps Tailwind utilities (bg-paper, text-ink, …) onto those variables. */
+   @theme block maps Tailwind utilities (bg-paper, text-ink, …) onto those variables.
+   The brand is deliberately spare: clean white/black with a single green accent
+   (#00aa04, taken straight from the wordmark's tick). */
 @theme {
-  --font-serif: "EB Garamond", "Iowan Old Style", Palatino, Georgia, serif;
-  --font-sans: "Inter Variable", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-sans: "Archivo Variable", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  /* Alias kept so any leftover `font-serif` utility still resolves to the brand face. */
+  --font-serif: "Archivo Variable", ui-sans-serif, system-ui, sans-serif;
 
   --color-paper: var(--paper);
   --color-paper-raised: var(--paper-raised);
@@ -23,48 +26,46 @@
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-/* Light (default) — warm parchment + near-black ink + the studio plum accent.
-   The palette is shared with Discbound so the studio and its products read as one
-   family. */
+/* Light (default) — clean white paper, near-black ink, brand green accent. */
 :root {
-  --paper: #f7f2ea;
-  --paper-raised: #fffdf9;
-  --ink: #211d18;
-  --ink-soft: #4a423a;
-  --ink-mute: #8a7f72;
-  --line: #e4dbcd;
-  --accent: #834a7c;
-  --accent-soft: #f1e3ef;
+  --paper: #ffffff;
+  --paper-raised: #f6f7f6;
+  --ink: #0a0a0a;
+  --ink-soft: #404040;
+  --ink-mute: #737373;
+  --line: #e6e6e6;
+  --accent: #00aa04;        /* brand green, from the wordmark tick */
+  --accent-soft: #e6f6e7;
   --accent-ink: #ffffff;
   color-scheme: light;
 }
 
-/* Dark — respects the system by default; the toggle overrides via [data-theme]. */
+/* Dark — true black paper; the green brightens so it still pops on black. */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --paper: #16130f;
-    --paper-raised: #1f1b16;
-    --ink: #f1ebe1;
-    --ink-soft: #c8bfb2;
-    --ink-mute: #8f8577;
-    --line: #322c24;
-    --accent: #d79fcd;
-    --accent-soft: #372233;
-    --accent-ink: #1b101a;
+    --paper: #0a0a0a;
+    --paper-raised: #161616;
+    --ink: #f5f5f5;
+    --ink-soft: #b4b4b4;
+    --ink-mute: #7d7d7d;
+    --line: #262626;
+    --accent: #2fc433;
+    --accent-soft: #10240f;
+    --accent-ink: #06210a;
     color-scheme: dark;
   }
 }
 
 :root[data-theme="dark"] {
-  --paper: #16130f;
-  --paper-raised: #1f1b16;
-  --ink: #f1ebe1;
-  --ink-soft: #c8bfb2;
-  --ink-mute: #8f8577;
-  --line: #322c24;
-  --accent: #d79fcd;
-  --accent-soft: #372233;
-  --accent-ink: #1b101a;
+  --paper: #0a0a0a;
+  --paper-raised: #161616;
+  --ink: #f5f5f5;
+  --ink-soft: #b4b4b4;
+  --ink-mute: #7d7d7d;
+  --line: #262626;
+  --accent: #2fc433;
+  --accent-soft: #10240f;
+  --accent-ink: #06210a;
   color-scheme: dark;
 }
 
@@ -92,13 +93,14 @@ body {
   border-color: var(--color-line);
 }
 
+/* Small uppercase label — the studio's one bit of "voice", tinted green. */
 .editorial-kicker,
 .marginalia {
   font-family: var(--font-sans);
-  font-size: 0.7rem;
-  font-weight: 600;
+  font-size: 0.72rem;
+  font-weight: 700;
   line-height: 1.35;
-  letter-spacing: 0.15em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
 }
 
@@ -110,7 +112,14 @@ body {
   color: var(--color-ink-mute);
 }
 
+/* Display headings echo the wordmark: heavy Archivo, tight tracking. */
+.display {
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.02;
+}
+
 ::selection {
-  background: var(--color-accent-soft);
-  color: var(--color-ink);
+  background: var(--color-accent);
+  color: var(--color-accent-ink);
 }
