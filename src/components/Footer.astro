@@ -1,0 +1,14 @@
+---
+import { SITE } from '../consts';
+const year = new Date().getFullYear();
+---
+<footer class="border-t rule">
+  <div class="mx-auto flex max-w-5xl flex-col gap-2 px-5 py-8 text-sm text-ink-mute sm:flex-row sm:items-center sm:justify-between">
+    <p>© {year} {SITE.name}</p>
+    <p>
+      <a href={`mailto:${SITE.email}`} class="text-ink-soft transition-colors hover:text-accent">
+        {SITE.email}
+      </a>
+    </p>
+  </div>
+</footer>

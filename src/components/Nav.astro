@@ -1,0 +1,25 @@
+---
+import Wordmark from './Wordmark.astro';
+import ThemeToggle from './ThemeToggle.astro';
+import { NAV } from '../consts';
+---
+<header class="sticky top-0 z-40 border-b rule bg-paper/85 backdrop-blur">
+  <nav class="mx-auto flex max-w-5xl items-center justify-between px-5 py-3.5">
+    <Wordmark />
+    <div class="flex items-center gap-1">
+      <ul class="mr-1 hidden items-center gap-1 sm:flex">
+        {NAV.map((item) => (
+          <li>
+            <a
+              href={item.href}
+              class="rounded-md px-3 py-2 text-sm font-medium text-ink-soft transition-colors hover:bg-paper-raised hover:text-ink"
+            >
+              {item.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+      <ThemeToggle />
+    </div>
+  </nav>
+</header>

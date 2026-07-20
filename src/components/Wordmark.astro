@@ -1,0 +1,21 @@
+---
+import { SITE } from '../consts';
+interface Props {
+  /** Show just the mark, or the mark + wordmark. */
+  showText?: boolean;
+}
+const { showText = true } = Astro.props;
+---
+<a href="/" class="group inline-flex items-center gap-2.5 text-ink" aria-label={SITE.name}>
+  <!-- The studio mark: three rising bars — progress, made visible. -->
+  <svg class="h-7 w-7 shrink-0" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <rect x="3"  y="14" width="4.5" height="7"  rx="1.2" fill="currentColor" class="text-accent/55" />
+    <rect x="9.75" y="9"  width="4.5" height="12" rx="1.2" fill="currentColor" class="text-accent/78" />
+    <rect x="16.5" y="3"  width="4.5" height="18" rx="1.2" fill="currentColor" class="text-accent" />
+  </svg>
+  {showText && (
+    <span class="font-serif text-lg font-semibold tracking-tight">
+      Progress&nbsp;Visible
+    </span>
+  )}
+</a>

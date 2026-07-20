@@ -1,0 +1,116 @@
+@import "tailwindcss";
+
+/* Fonts are self-hosted (@fontsource) — imported in Base.astro — so the page makes NO
+   external font requests. EB Garamond + Inter match the studio's product faces
+   (Discbound) for brand continuity across the whole studio. */
+
+/* Design tokens. Colours are CSS variables so light/dark can swap at runtime; the
+   @theme block maps Tailwind utilities (bg-paper, text-ink, …) onto those variables. */
+@theme {
+  --font-serif: "EB Garamond", "Iowan Old Style", Palatino, Georgia, serif;
+  --font-sans: "Inter Variable", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+
+  --color-paper: var(--paper);
+  --color-paper-raised: var(--paper-raised);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-ink-mute: var(--ink-mute);
+  --color-line: var(--line);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-accent-ink: var(--accent-ink);
+
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Light (default) — warm parchment + near-black ink + the studio plum accent.
+   The palette is shared with Discbound so the studio and its products read as one
+   family. */
+:root {
+  --paper: #f7f2ea;
+  --paper-raised: #fffdf9;
+  --ink: #211d18;
+  --ink-soft: #4a423a;
+  --ink-mute: #8a7f72;
+  --line: #e4dbcd;
+  --accent: #834a7c;
+  --accent-soft: #f1e3ef;
+  --accent-ink: #ffffff;
+  color-scheme: light;
+}
+
+/* Dark — respects the system by default; the toggle overrides via [data-theme]. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #16130f;
+    --paper-raised: #1f1b16;
+    --ink: #f1ebe1;
+    --ink-soft: #c8bfb2;
+    --ink-mute: #8f8577;
+    --line: #322c24;
+    --accent: #d79fcd;
+    --accent-soft: #372233;
+    --accent-ink: #1b101a;
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme="dark"] {
+  --paper: #16130f;
+  --paper-raised: #1f1b16;
+  --ink: #f1ebe1;
+  --ink-soft: #c8bfb2;
+  --ink-mute: #8f8577;
+  --line: #322c24;
+  --accent: #d79fcd;
+  --accent-soft: #372233;
+  --accent-ink: #1b101a;
+  color-scheme: dark;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background-color: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-synthesis-weight: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+
+/* A hairline that reads on both themes. */
+.rule {
+  border-color: var(--color-line);
+}
+
+.editorial-kicker,
+.marginalia {
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
+  font-weight: 600;
+  line-height: 1.35;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.editorial-kicker {
+  color: var(--color-accent);
+}
+
+.marginalia {
+  color: var(--color-ink-mute);
+}
+
+::selection {
+  background: var(--color-accent-soft);
+  color: var(--color-ink);
+}
