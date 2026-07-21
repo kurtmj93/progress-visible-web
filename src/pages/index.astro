@@ -1,22 +1,30 @@
 ---
 import type { ImageMetadata } from 'astro';
-import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import Lockup from '../components/Lockup.astro';
+import ScreenshotLightbox from '../components/ScreenshotLightbox.astro';
 import { SITE, PRODUCTS } from '../consts';
-import storyboardLight from '../assets/screenshots/storyboard-light.png';
-import storyboardDark from '../assets/screenshots/storyboard-dark.png';
+import editorLight from '../assets/screenshots/Discbound Editor - Light.png';
+import editorDark from '../assets/screenshots/Discbound Editor - Dark.png';
+import storyboardLight from '../assets/screenshots/Discbound Storyboard - Light.png';
+import storyboardDark from '../assets/screenshots/Discbound Storyboard - Dark.png';
 
 // Optional preview shot per product, keyed by name. Both theme variants ship and are
 // swapped in CSS (.shot-light / .shot-dark) so the toggle is respected with zero JS.
-const SHOTS: Record<string, { light: ImageMetadata; dark: ImageMetadata; alt: string }> = {
-  Discbound: {
-    light: storyboardLight,
-    dark: storyboardDark,
-    alt: 'Discbound storyboard — a chapter timeline with word counts, statuses, and note cards',
-  },
+const SHOTS: Record<string, { light: ImageMetadata; dark: ImageMetadata; alt: string }[]> = {
+  Discbound: [
+    {
+      light: storyboardLight,
+      dark: storyboardDark,
+      alt: 'Discbound storyboard — a chapter timeline with word counts, statuses, and note cards',
+    },
+    {
+      light: editorLight,
+      dark: editorDark,
+      alt: 'Discbound editor — a focused manuscript view with chapter navigation and writing tools',
+    },
+  ],
 };
-const shotImg = { widths: [480, 720, 960, 1282], sizes: '(max-width: 768px) 100vw, 900px', quality: 82 };
 ---
 <Base>
   <!-- Hero -->
@@ -106,17 +114,16 @@ const shotImg = { widths: [480, 720, 960, 1282], sizes: '(max-width: 768px) 100v
       </div>
       <ul class="space-y-4">
         {PRODUCTS.map((product) => {
-          const shot = SHOTS[product.name];
-          return (
-          <li>
-            <a
-              href={product.href}
-              class="group block overflow-hidden rounded-2xl border rule bg-paper-raised transition-colors hover:border-accent"
-            >
-              {shot && (
-                <div class="border-b rule bg-paper">
-                  <Image src={shot.light} alt={shot.alt} {...shotImg} class="shot-light block h-auto w-full" />
-                  <Image src={shot.dark} alt={shot.alt} {...shotImg} class="shot-dark h-auto w-full" />
+          const shots = SHOTS[product.name];
+          const card = (
+            <>
+              {shots && (
+                <div class="grid border-b rule bg-paper sm:grid-cols-2">
+                  {shots.map((shot, index) => (
+                    <div class:list={[index === 0 && 'border-b rule sm:border-r sm:border-b-0']}>
+                      <ScreenshotLightbox light={shot.light} dark={shot.dark} alt={shot.alt} />
+                    </div>
+                  ))}
                 </div>
               )}
               <div class="p-6 sm:p-8">
@@ -128,12 +135,26 @@ const shotImg = { widths: [480, 720, 960, 1282], sizes: '(max-width: 768px) 100v
                   </span>
                 </div>
                 <p class="mt-3 max-w-2xl leading-relaxed text-ink-soft">{product.blurb}</p>
-                <span class="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-accent">
-                  {product.href.replace('https://', '')}
-                  <span class="transition-transform group-hover:translate-x-0.5">→</span>
+                <span class="mt-4 inline-flex items-center text-sm font-semibold text-accent">
+                  Coming soon
                 </span>
               </div>
-            </a>
+            </>
+          );
+          return (
+          <li>
+            {product.href ? (
+              <a
+                href={product.href}
+                class="group block overflow-hidden rounded-2xl border rule bg-paper-raised transition-colors hover:border-accent"
+              >
+                {card}
+              </a>
+            ) : (
+              <div class="block overflow-hidden rounded-2xl border rule bg-paper-raised">
+                {card}
+              </div>
+            )}
           </li>
           );
         })}

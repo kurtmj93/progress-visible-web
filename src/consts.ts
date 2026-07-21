@@ -14,7 +14,7 @@ export const PRODUCTS = [
   {
     name: 'Discbound',
     status: 'In development',
-    href: 'https://discbound.app',
+    href: null,
     blurb:
       'A buy-once, local-first desktop writing app for solo authors of prose-led books. ' +
       'It keeps a long series straight — people, places, and recurring names — without filing, subscription, or cloud.',
